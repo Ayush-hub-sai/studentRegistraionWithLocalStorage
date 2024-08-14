@@ -61,52 +61,70 @@
           }
           <button type="button" class="btn-close" (click)="closeModal()"></button>
         </div>
-        <div class="modal-body">
-          <div class="row pt-2">
-            <div class="col-6">
-              <label for="name">Name</label>
-              <input type="text" placeholder="Enter Your Name" name="name" class="form-control"
-                [(ngModel)]="studentObj.name">
+        <form #studentForm="ngForm">
+
+          <div class="modal-body">
+            <div class="row pt-2">
+              <div class="col-6">
+                <label for="name">Name</label>
+                <input type="text" placeholder="Enter Your Name" name="name" class="form-control"
+                  [(ngModel)]="studentObj.name" #fname="ngModel" required minlength="3">
+                <!-- it can work without form tag -->
+                <div class="text-danger">
+                  @if((fname.touched || fname.dirty) && fname.errors?.["required"]){
+                  <span>
+                    Student Name Is Required
+                  </span>
+                  }@else if ((fname.touched || fname.dirty) && fname.errors?.["minlength"]) {
+                  <span>
+                    Min 3 Char Is Required
+                  </span>
+                  }
+                </div>
+              </div>
+              
+              <div class="col-6">
+                <label for="mobile">Mobile</label>
+                <input type="text" placeholder="Enter Your Mobile" name="mobile" class="form-control"
+                  [(ngModel)]="studentObj.mobileNumber" maxlength="10">
+              </div>
             </div>
-            <div class="col-6">
-              <label for="mobile">Mobile</label>
-              <input type="text" placeholder="Enter Your Mobile" name="mobile" class="form-control"
-                [(ngModel)]="studentObj.mobileNumber" maxlength="10">
+            <div class="row pt-2">
+              <div class="col-6">
+                <label for="city">City</label>
+                <input type="text" placeholder="Enter Your City" name="city" class="form-control"
+                  [(ngModel)]="studentObj.city">
+              </div>
+              <div class="col-6">
+                <label for="state">State</label>
+                <input type="text" placeholder="Enter Your State" name="state" class="form-control"
+                  [(ngModel)]="studentObj.state">
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-6">
+                <label for="Country">Country</label>
+                <input type="text" placeholder="Enter Your Country" name="Country" class="form-control"
+                  [(ngModel)]="studentObj.country">
+              </div>
+              <div class="col-6">
+                <label for="Pincode">Pincode</label>
+                <input type="text" placeholder="Enter Your Pincode" name="Pincode" class="form-control"
+                  [(ngModel)]="studentObj.pincode" maxlength="6">
+              </div>
             </div>
           </div>
-          <div class="row pt-2">
-            <div class="col-6">
-              <label for="city">City</label>
-              <input type="text" placeholder="Enter Your City" name="city" class="form-control"
-                [(ngModel)]="studentObj.city">
-            </div>
-            <div class="col-6">
-              <label for="state">State</label>
-              <input type="text" placeholder="Enter Your State" name="state" class="form-control"
-                [(ngModel)]="studentObj.state">
-            </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            @if(studentObj.id==0){
+            <button type="button" class="btn btn-primary" (click)="saveStudent()" [disabled]="studentForm.invalid">Save
+            </button>
+            }@else {
+            <button type="button" class="btn btn-primary" (click)="updateStudent()">Update </button>
+            }
           </div>
-          <div class="row pt-2">
-            <div class="col-6">
-              <label for="Country">Country</label>
-              <input type="text" placeholder="Enter Your Country" name="Country" class="form-control"
-                [(ngModel)]="studentObj.country">
-            </div>
-            <div class="col-6">
-              <label for="Pincode">Pincode</label>
-              <input type="text" placeholder="Enter Your Pincode" name="Pincode" class="form-control"
-                [(ngModel)]="studentObj.pincode" maxlength="6">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-          @if(studentObj.id==0){
-          <button type="button" class="btn btn-primary" (click)="saveStudent()">Save </button>
-          }@else {
-          <button type="button" class="btn btn-primary" (click)="updateStudent()">Update </button>
-          }
-        </div>
+        </form>
       </div>
     </div>
   </div>
